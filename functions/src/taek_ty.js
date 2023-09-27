@@ -1,7 +1,7 @@
 const { onRequest, } = require("firebase-functions/v2/https");
 const line = require('../util/line.util');
 const firebase = require('../util/firebase.util');
-const flexGroup = require('../flex/group');
+const flexTaekTy = require('../flex/teak_ty');
 const taeyTyUtil = require('../util/taey_ty.util');
 
 // const redis = require('../util/redis.util');
@@ -27,8 +27,8 @@ exports.taey_ty = onRequest(async (request, response) => {
         https://developers.line.biz/en/reference/messaging-api/#join-event
         */
       if (event.type === "join") {
-          /* ✅ 1.1 [join] reply util.reply(event.replyToken,[flexGroup.welcomeMessage()]) */
-          await line.reply(event.replyToken, [flexGroup.welcomeMessage()])
+          /* ✅ 1.1 [join] reply util.reply(event.replyToken,[flexTaekTy.welcomeMessage()]) */
+          await line.reply(event.replyToken, [flexTaekTy.welcomeMessage()])
           return response.end();
       }
 
@@ -46,7 +46,7 @@ exports.taey_ty = onRequest(async (request, response) => {
                 let countGroup = await firebase.countUserGroup(event.source.groupId)
 
                 /* ✅ 2.3 [memberJoined] reply [memberJoinedMessage(profile.data.displayName,countGroup)] */
-                await line.reply(event.replyToken, [flexGroup.memberJoinedMessage(profile.data.displayName, countGroup)])
+                await line.reply(event.replyToken, [flexTaekTy.memberJoinedMessage(profile.data.displayName, countGroup)])
             }
         }
         return response.end();
@@ -70,7 +70,7 @@ exports.taey_ty = onRequest(async (request, response) => {
               let countGroup = await firebase.countUserGroup(event.source.groupId)
 
               /* ✅ 3.3 [summaryGroup] reply message : summaryGroup(countGroup) */
-              await line.reply(event.replyToken, [flexGroup.summaryGroup(countGroup)])
+              await line.reply(event.replyToken, [flexTaekTy.summaryGroup(countGroup)])
 
               return response.end();
           }
@@ -95,13 +95,13 @@ exports.taey_ty = onRequest(async (request, response) => {
 
               /* ❌ [Reply Error Message] Table < 2 */
               if (arrayTable.length < 2) {
-                  await line.reply(event.replyToken, [flexGroup.countTableError(countGroup)]);
+                  await line.reply(event.replyToken, [flexTaekTy.countTableError(countGroup)]);
                   return response.end();
               }
 
               /* ❌[reoply ฎrror message] Summary group from array not equl all member in group  */
               if (countGroup !== sumNumMember) {
-                  await line.reply(event.replyToken, [flexGroup.summaryGroupError(countGroup, sumNumMember)]);
+                  await line.reply(event.replyToken, [flexTaekTy.summaryGroupError(countGroup, sumNumMember)]);
                   return response.end();
               }
 
@@ -191,7 +191,7 @@ const shuffleTableGroup = async (replyToken, groupId, arrayTable) => {
     });
     nameList += " แตกโต๊ะ แต่ไม่แตกแยก กลับมาแตกด้วยกันใหม่น้า "
 
-    await line.reply(replyToken, [flexGroup.finalNamelist(nameList)]);
+    await line.reply(replyToken, [flexTaekTy.finalNamelist(nameList)]);
 
 
 }

@@ -8,6 +8,7 @@ setGlobalOptions({
 })
 
 exports.webhook = require('./src/webhook')
+exports.bucket = require('./src/bucket')
 // exports.message = require('./src/message')
 // exports.dialogflow = require('./src/dialogflow')
 // exports.kafka = require('./src/kafka')

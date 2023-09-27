@@ -1,16 +1,12 @@
-const {
-  initializeApp,
-  cert
-} = require('firebase-admin/app');
-const {
-  getFirestore
-} = require('firebase-admin/firestore');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
 
-const serviceAccount = require('../firebase_key.json');
+initializeApp();
+// const serviceAccount = require('../firebase_key.json');
 
-initializeApp({
-  credential: cert(serviceAccount)
-});
+// initializeApp({
+//   credential: cert(serviceAccount)
+// });
 
 const db = getFirestore();
 const userDb = db.collection("user")
@@ -80,3 +76,65 @@ exports.getUserGroup = async (groupId) => {
   return (arrayUser.length > 1) ? arrayUser : false
 }
 
+
+const moment = require('moment-timezone');
+
+/* Insert publicUrl by groupId */
+exports.insertImageGroup = async (groupId, messageId, publicUrl) => {
+
+  const date = moment().tz('Asia/Bangkok').format('YYYY-MM-DD')
+
+  await imagesDb.add({
+    groupId: groupId,
+    messageId: messageId,
+    publicUrl: publicUrl,
+    date: date
+  })
+}
+
+/* Update Tag Image */
+exports.updateTagImage = async (groupId, messageId, tag) => {
+  let userDocument = imagesDb.where("groupId", "==", groupId).where("messageId", "==", messageId)
+  await userDocument.get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      imagesDb.doc(doc.id).update({
+        tag: tag
+      })
+    });
+  });
+}
+
+/* Save image to cloud storage */
+exports.saveImageToStorage = async (message, groupId, binary) => {
+  const date = moment().tz('Asia/Bangkok').format('YYYY-MM-DD')
+  const storageBucket = storage.bucket(bucketName);
+  let extension = getExtension(message, message.type)
+  const file = storageBucket.file(`${groupId}/${date}/${message.id}.${extension}`);
+  await file.save(binary.data);
+  file.makePublic()
+  return file.publicUrl()
+};
+
+
+function getExtension(message, messageType) {
+  let extension = '';
+  switch (messageType) {
+    case "image":
+      extension = 'png';
+      break;
+    case "video":
+      extension = 'mp4';
+      break;
+    case "audio":
+      extension = 'm4a';
+      break;
+    case "file":
+      const regex = /\.([0-9a-z]+)(?:[\?#]|$)/i;
+      const match = regex.exec(message.fileName);
+      extension = match ? match[1] : '';
+      break;
+  }
+
+  return extension
+
+}
