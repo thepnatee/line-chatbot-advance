@@ -1,0 +1,15 @@
+{
+    "privateKey": {
+        "alg": "RS256",
+        "d": "JeSJWnvZ......",
+        "dp": "gBDRXGg7......",
+        "dq": "MjFJ4xM9......",
+        "e": "AQ......",
+        "kty": "RSA",
+        "n": "pTS2jGso......",
+        "p": "xQibzkW6......",
+        "q": "1qWtyQ9s......",
+        "qi": "sdVGblc......",
+        "use": "sig"
+      }
+}

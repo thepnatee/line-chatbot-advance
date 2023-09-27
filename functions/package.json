@@ -1,0 +1,37 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "emulators:start": "firebase emulators:start",
+    "emulators:stop": "lsof -t -i:5001 -i:5002 -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 | xargs kill -9"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google-ai/generativelanguage": "^1.1.0",
+    "crypto": "^1.0.1",
+    "@google-cloud/dialogflow": "^6.1.0",
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "firebase-admin": "^11.10.1",
+    "firebase-functions": "^4.4.1",
+    "google-auth-library": "^9.0.0",
+    "kafkajs": "^2.2.4",
+    "moment": "^2.29.4",
+    "node-jose": "^2.2.0",
+    "openai": "^4.10.0",
+    "redis": "^4.6.10"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
