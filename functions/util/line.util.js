@@ -445,17 +445,12 @@ exports.linkRichMenu = async (userId, richMenuId) => {
   const issue_token = await issueTokenV3()
   const access_token = issue_token.access_token
   
-  console.log(access_token);
   return axios({
     method: "post",
     url: `${LINE_MESSAGING_API}/user/${userId}/richmenu/${richMenuId}`,
     headers: {
       'Authorization': `Bearer ${access_token}`,
       'Content-Type': 'application/json'
-    },
-    data: JSON.stringify({
-      richMenuId,
-      userId
-    })
+    }
   });
 };

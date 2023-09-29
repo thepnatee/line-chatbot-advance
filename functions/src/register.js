@@ -4,7 +4,7 @@ const line = require('../util/line.util');
 const redis = require('../util/redis.util');
 const flex = require('../flex/user.js');
 
-exports.register = onRequest({ region: "asia-northeast1" }, (request, response) => {
+exports.register = onRequest(async(request, response) => {
   cors(request, response, async () => {
     const token = request.body.token
     const tokenVerify = await line.verifyIDToken(token)
@@ -19,9 +19,10 @@ exports.register = onRequest({ region: "asia-northeast1" }, (request, response) 
     }
     redis.setObject(userId, JSON.stringify(userObject))
 
-    const richmenuIdB = 'richmenu-55a61b05efed1e174f9ee3e54d8506c0'
-    await line.linkRichMenu(userId, richmenuIdB)
-    await line.pushLineNotify(`ลงทะเบียนผู้ใช้ใหม่ https://liff.line.me/2000198531-AZpzJ9K0?uid=${userId}`);
+    const richmenuId = process.env.WK_RICHMENU_ID
+    const liffId = process.env.WK_LIFF_ID
+    await line.linkRichMenu(userId, richmenuId)
+    await line.pushLineNotify(`ลงทะเบียนผู้ใช้ใหม่ https://liff.line.me/${liffId}?uid=${userId}`);
     await line.broadcast({
       "messages": [
         flex.getUserFlex(userId, tokenVerify.picture, request.body.name)
@@ -31,12 +32,10 @@ exports.register = onRequest({ region: "asia-northeast1" }, (request, response) 
   })
 });
 
-exports.info = onRequest({ region: "asia-northeast1" }, (request, response) => {
+exports.info = onRequest(async(request, response) => {
   cors(request, response, async () => {
     let uid = request.query.uid
-    console.log('Sitthi : uid: ', uid);
     let userObject = await redis.getObject(uid)
-    console.log('Sitthi : userObject: ', userObject);
     response.send({ result: 'OK', userObject });
   })
 });
