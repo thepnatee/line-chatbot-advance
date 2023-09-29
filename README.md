@@ -14,6 +14,23 @@
 4. LINE Bot Designer
 5. Installation Python https://www.python.org/downloads/
 
+## Summary Programe & Tools
+    Visual Studio Code : https://code.visualstudio.com/
+    Install Node https://nodejs.org/en/
+    Install Ngrok https://ngrok.com/download
+    Ngrok Other : https://gist.github.com/wosephjeber/aa174fb851dfe87e644e
+    POSTMAN : https://www.postman.com/downloads/
+
+    Dialogflow : https://dialogflow.cloud.google.com/
+    LINE Developers Console https://developers.line.biz/console/
+    Upstash : https://upstash.com/
+    Firebase Console : https://console.firebase.google.com
+    Medium https://medium.com/@thepnateephojan
+    Flex Message Simulator https://developers.line.biz/flex-simulator/
+    Flex Formatter https://ex10.tech/portal/tools/flex-formatter
+    Stackblitz: https://stackblitz.com/
+
+
 ## Firebase 
 1. install firebase cli
 ````
