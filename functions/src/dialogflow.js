@@ -21,7 +21,7 @@ exports.webhook = onRequest(async (request, response) => {
 
       const profile = await line.getProfile(event.source.userId)
 
-      const result = await dialogflow.runSample(event.source.userId, event.message.text, profile.data.language)
+      const result = await dialogflow.postToDialogflowWithCredential(event.source.userId, event.message.text, profile.data.language)
       await line.reply(event.replyToken, [{
         "type": "text",
         "text": result.fulfillmentText,

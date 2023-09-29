@@ -1,9 +1,8 @@
 
 const dialogflow = require('@google-cloud/dialogflow');
 const axios = require("axios");
-// const crypto = require('crypto');
 
-exports.runSample = async (userId, message, language) => {
+exports.postToDialogflowWithCredential = async (userId, message, language) => {
   // A unique identifier for the given session
   const sessionId = userId;
   const projectId = require('../dialogflow_key.json');
@@ -47,41 +46,3 @@ exports.postToDialogflow = async (req) => {
     data: req.body
   });
 };
-
-// exports.convertToDialogflow = (req, body) => {
-//   const jsonBody = JSON.stringify(body);
-//   req.headers.host = "dialogflow.cloud.google.com";
-//   req.headers["x-line-signature"] = calculateLineSignature(jsonBody);
-//   req.headers["content-length"] = jsonBody.length;
-//   return axios({
-//     url: `https://dialogflow.cloud.google.com/v1/integrations/line/webhook/${config.agentId}`,
-//     headers: req.headers,
-//     method: "post",
-//     data: body
-//   });
-// };
-
-// function calculateLineSignature(body) {
-//   const signature = crypto
-//     .createHmac('SHA256', config.channelSecret)
-//     .update(body).digest('base64');
-//   return signature;
-// }
-
-// exports.createLineTextEvent = (originalRequest, originalEvent, text) => {
-//   return {
-//     events:
-//       [{
-//         type: 'message',
-//         replyToken: originalEvent.replyToken,
-//         source: originalEvent.source,
-//         timestamp: originalEvent.timestamp,
-//         mode: originalEvent.mode,
-//         message: {
-//           type: 'text',
-//           text,
-//         },
-//       }],
-//     destination: originalRequest.body.destination,
-//   };
-// }

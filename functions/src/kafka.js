@@ -4,6 +4,27 @@ const redis = require('../util/redis.util');
 const flexProfile = require('../flex/profile');
 const kafka = require('../util/kafka.util');
 
+exports.pooling = onRequest(async(request, response) => {
+  await kafka.poolingPushMessage()
+  await kafka.poolingWebhookMessage()
+
+  return response.send(request.method);
+
+});
+
+exports.webhook = onRequest(async(request, response) => {
+
+  if (request.method !== "POST") {
+    return response.send(request.method);
+  }
+  const events = request.body.events
+  for (const event of events) {
+    await kafka.send(process.env.KAFKA_TOPIC_WEBHOOK,event.replyToken,JSON.stringify(event))
+  }
+
+  return response.send(request.method);
+
+});
 
 exports.send = onRequest(async(request, response) => {
 
@@ -30,25 +51,5 @@ exports.send = onRequest(async(request, response) => {
 
 });
 
-exports.webhook = onRequest(async(request, response) => {
 
-  if (request.method !== "POST") {
-    return response.send(request.method);
-  }
-  const events = request.body.events
-  for (const event of events) {
-    await kafka.send(process.env.KAFKA_TOPIC_WEBHOOK,event.replyToken,JSON.stringify(event))
-  }
-
-  return response.send(request.method);
-
-});
-
-exports.pooling = onRequest(async(request, response) => {
-  await kafka.poolingPushMessage()
-  await kafka.poolingWebhookMessage()
-
-  return response.send(request.method);
-
-});
 

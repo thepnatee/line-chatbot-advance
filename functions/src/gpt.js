@@ -26,6 +26,7 @@ exports.webhook = onRequest(async (request, response) => {
   return response.send(request.method);
 
 });
+
 exports.generate_image = onRequest(async (request, response) => {
 
   if (request.method !== "POST") {
