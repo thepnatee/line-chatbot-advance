@@ -8,13 +8,13 @@ setGlobalOptions({
 })
 
 exports.webhook = require('./src/webhook')
-exports.bucket = require('./src/bucket')
-// exports.message = require('./src/message')
-// exports.dialogflow = require('./src/dialogflow')
+// exports.redis = require('./src/redis')
 // exports.kafka = require('./src/kafka')
+// exports.dialogflow = require('./src/dialogflow')
+// exports.message = require('./src/message')
+// exports.bucket = require('./src/bucket')
 // exports.cron = require('./src/cron')
 // exports.register = require('./src/register')
-// exports.redis = require('./src/redis')
 // exports.gpt = require('./src/gpt')
 // exports.bonus = require('./src/taey_ty')
 

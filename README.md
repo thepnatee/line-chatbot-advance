@@ -40,7 +40,10 @@ npm i
 ````
 
 ````
-mv .env.example .env && mv dialogflow_key_example.json && mv private_key_example.json
+mv .env.example .env && 
+mv dialogflow_key_example.json dialogflow_key.json  && 
+mv firebase_key_example.json firebase_key.json  && 
+mv private_key_example.json private_key.json
 ````
 
 ````

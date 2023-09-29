@@ -6,7 +6,7 @@ const axios = require("axios");
 exports.runSample = async (userId, message, language) => {
   // A unique identifier for the given session
   const sessionId = userId;
-  const projectId = process.env.DIALOGFLOW_PROJECT_ID;
+  const projectId = require('../dialogflow_key.json');
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient({
     projectId,
